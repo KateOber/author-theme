@@ -13,10 +13,145 @@ Text Domain: author-theme
 body { margin: 0; font: 1.125rem/1.65 Georgia, serif; }
 a { color: #365c4c; text-underline-offset: .18em; }
 img { max-width: 100%; height: auto; }
-.site-header, .site-footer, main { max-width: 72rem; margin: auto; padding: 1.25rem clamp(1rem, 4vw, 3rem); }
-.site-header { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .75rem 2rem; border-bottom: 1px solid #dedbd1; }
-.site-name { font-size: 1.4rem; font-weight: bold; }
+.site-footer, main { max-width: 72rem; margin: auto; padding: 1.25rem clamp(1rem, 4vw, 3rem); }
 .reader { max-width: 68ch; margin-inline: auto; }
 .reader h1 { line-height: 1.15; }
 .chapter-nav { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin-top: 3rem; }
 .book-cover { max-width: 18rem; }
+
+.site-header {
+    position: relative;
+    z-index: 2;
+    border-bottom: 1px solid #e7d5c2;
+    background: #faf0e5;
+    color: #172830;
+}
+
+.site-header-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0 .75rem;
+    max-width: 88rem;
+    min-height: 4rem;
+    margin-inline: auto;
+    padding: .35rem clamp(1rem, 3vw, 2.5rem);
+}
+
+.site-brand .site-name {
+    color: inherit;
+    font-size: clamp(1.45rem, 4vw, 2rem);
+    font-style: italic;
+    line-height: 1.15;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
+
+.site-brand .custom-logo {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 3rem;
+}
+
+.site-navigation { grid-column: 1 / -1; grid-row: 2; }
+.site-navigation.has-toggle:not(.is-open) { display: none; }
+.site-menu, .site-menu .sub-menu { margin: 0; padding: 0; list-style: none; }
+.site-menu .sub-menu { padding-inline-start: 1rem; }
+.site-menu a { display: block; padding: .5rem .65rem; color: inherit; text-decoration: none; }
+.site-menu a:hover, .site-menu [aria-current="page"] { color: #245464; text-decoration: underline; }
+.site-menu .menu-item-has-children > a::after { content: '⌄'; margin-inline-start: .3em; }
+
+.site-header-tools {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.site-search > summary, .site-menu-toggle {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+    list-style: none;
+}
+
+.site-search > summary::-webkit-details-marker { display: none; }
+.site-menu-toggle[hidden] { display: none; }
+.site-search-icon {
+    position: relative;
+    width: .9rem;
+    height: .9rem;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+}
+.site-search-icon::after {
+    position: absolute;
+    right: -.35rem;
+    bottom: -.18rem;
+    width: .42rem;
+    height: 2px;
+    background: currentColor;
+    transform: rotate(45deg);
+    content: '';
+}
+.site-menu-icon {
+    width: 1.15rem;
+    height: 2px;
+    background: currentColor;
+    box-shadow: 0 -.36rem currentColor, 0 .36rem currentColor;
+}
+
+.site-search-panel {
+    position: absolute;
+    inset-inline-end: clamp(1rem, 3vw, 2.5rem);
+    top: 100%;
+    width: min(25rem, calc(100% - 2rem));
+    padding: 1rem;
+    border: 1px solid #e7d5c2;
+    border-radius: 0 0 .5rem .5rem;
+    background: #faf0e5;
+}
+.site-search-panel form { display: flex; gap: .45rem; }
+.site-search-panel label { flex: 1; min-width: 0; }
+.site-search-panel input { padding: .45rem; font: inherit; }
+.site-search-panel input[type="search"] { width: 100%; }
+.site-search-panel input[type="submit"] { border: 0; background: #245464; color: white; cursor: pointer; }
+.site-header :focus-visible { outline: 2px solid #245464; outline-offset: 2px; }
+
+.site-visually-hidden, .site-header .screen-reader-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+@media (min-width: 48rem) {
+    .site-header-inner { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
+    .site-navigation, .site-navigation.has-toggle:not(.is-open) { display: block; grid-column: 2; grid-row: 1; }
+    .site-header-tools { grid-column: 3; }
+    .site-menu-toggle { display: none; }
+    .site-menu { display: flex; flex-wrap: wrap; justify-content: center; }
+    .site-menu li { position: relative; }
+    .site-menu .sub-menu {
+        position: absolute;
+        display: none;
+        min-width: 11rem;
+        padding: .3rem;
+        border: 1px solid #e7d5c2;
+        background: #faf0e5;
+    }
+    .site-menu li:hover > .sub-menu, .site-menu li:focus-within > .sub-menu { display: block; }
+    .site-menu .sub-menu .sub-menu { inset-inline-start: 100%; top: 0; }
+}

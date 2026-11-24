@@ -5,11 +5,15 @@ add_action('after_setup_theme', function () {
     load_theme_textdomain('author-theme', get_template_directory() . '/languages');
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
+    add_theme_support('custom-logo', ['unlink-homepage-logo' => true]);
+    register_nav_menu('primary', __('Primary navigation', 'author-theme'));
     add_theme_support('automatic-feed-links');
 });
 
 add_action('wp_enqueue_scripts', function () {
-    wp_enqueue_style('author-theme', get_stylesheet_uri(), [], wp_get_theme()->get('Version'));
+    wp_enqueue_style('author-theme', get_stylesheet_uri(), [], (string) filemtime(get_stylesheet_directory() . '/style.css'));
+    $navigation_script = 'assets/navigation.js';
+    wp_enqueue_script('author-theme-navigation', get_theme_file_uri($navigation_script), [], (string) filemtime(get_theme_file_path($navigation_script)), true);
     if (is_singular('chapter')) {
         $reader_css = 'assets/chapter-reader.css';
         wp_enqueue_style('author-theme-chapter-reader', get_theme_file_uri($reader_css), ['author-theme'], (string) filemtime(get_theme_file_path($reader_css)));
