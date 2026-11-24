@@ -1,0 +1,43 @@
+name: Deploy Author Theme
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: author-theme-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Check PHP syntax
+        run: git ls-files -z '*.php' | xargs -0 -n 1 php -l
+      - name: Sync theme over SSH
+        env:
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+          DEPLOY_THEMES_DIR: ${{ vars.DEPLOY_THEMES_DIR }}
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          : "${DEPLOY_SSH_KEY:?Set the DEPLOY_SSH_KEY repository secret}"
+          : "${DEPLOY_KNOWN_HOSTS:?Set the DEPLOY_KNOWN_HOSTS repository secret}"
+          umask 077
+          identity_dir=$(mktemp -d)
+          trap 'rm -rf -- "$identity_dir"' EXIT
+          printf '%s\n' "$DEPLOY_SSH_KEY" > "$identity_dir/key"
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > "$identity_dir/known_hosts"
+          export RSYNC_RSH="ssh -i $identity_dir/key -o IdentitiesOnly=yes -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$identity_dir/known_hosts -o ConnectTimeout=15"
+          unset DEPLOY_SSH_KEY DEPLOY_KNOWN_HOSTS
+          bash scripts/deploy.sh "${DEPLOY_HOST:?Set DEPLOY_HOST}" "${DEPLOY_THEMES_DIR:?Set DEPLOY_THEMES_DIR}" --non-interactive

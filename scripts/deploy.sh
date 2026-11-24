@@ -10,10 +10,13 @@ fi
 
 cd "$(git rev-parse --show-toplevel)"
 target="$host:${themes_directory%/}/author-theme/"
-# Limit uploads to tracked, public theme files.
-files=(style.css functions.php header.php footer.php index.php single-book.php single-chapter.php inc/publications.php)
-printf '%s\n' "Deploy destination: $target"
-printf '%s\n' "${files[@]}" | rsync -rni --files-from=- -e ssh ./ "$target"
-read -r -p 'Deploy these changes? [y/N] ' answer
-[[ $answer == y || $answer == Y ]] || exit 0
-printf '%s\n' "${files[@]}" | rsync -ri --files-from=- -e ssh ./ "$target"
+# Deploy only tracked WordPress theme files and assets.
+theme_files() {
+    git ls-files -z -- '*.php' '*.css' assets/ languages/ theme.json screenshot.png
+}
+if [[ ${3:-} != --non-interactive ]]; then
+    theme_files | rsync -rcni --from0 --files-from=- ./ "$target"
+    read -r -p 'Deploy these changes? [y/N] ' answer
+    [[ $answer == y || $answer == Y ]] || exit 0
+fi
+theme_files | rsync -rci --delay-updates --from0 --files-from=- ./ "$target"
