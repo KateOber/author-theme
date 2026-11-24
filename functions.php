@@ -1,5 +1,6 @@
 <?php
 require_once get_theme_file_path('inc/publications.php');
+require_once get_theme_file_path('inc/homepage.php');
 
 add_action('after_setup_theme', function () {
     load_theme_textdomain('author-theme', get_template_directory() . '/languages');
@@ -14,6 +15,10 @@ add_action('wp_enqueue_scripts', function () {
     wp_enqueue_style('author-theme', get_stylesheet_uri(), [], (string) filemtime(get_stylesheet_directory() . '/style.css'));
     $navigation_script = 'assets/navigation.js';
     wp_enqueue_script('author-theme-navigation', get_theme_file_uri($navigation_script), [], (string) filemtime(get_theme_file_path($navigation_script)), true);
+    if (is_front_page()) {
+        $home_css = 'assets/homepage.css';
+        wp_enqueue_style('author-theme-homepage', get_theme_file_uri($home_css), ['author-theme'], (string) filemtime(get_theme_file_path($home_css)));
+    }
     if (is_singular('chapter')) {
         $reader_css = 'assets/chapter-reader.css';
         wp_enqueue_style('author-theme-chapter-reader', get_theme_file_uri($reader_css), ['author-theme'], (string) filemtime(get_theme_file_path($reader_css)));
