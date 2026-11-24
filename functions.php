@@ -1,6 +1,7 @@
 <?php
 require_once get_theme_file_path('inc/publications.php');
 require_once get_theme_file_path('inc/homepage.php');
+require_once get_theme_file_path('inc/about.php');
 
 add_action('after_setup_theme', function () {
     load_theme_textdomain('author-theme', get_template_directory() . '/languages');
@@ -18,6 +19,10 @@ add_action('wp_enqueue_scripts', function () {
     if (is_front_page()) {
         $home_css = 'assets/homepage.css';
         wp_enqueue_style('author-theme-homepage', get_theme_file_uri($home_css), ['author-theme'], (string) filemtime(get_theme_file_path($home_css)));
+    }
+    if (is_page('about') || is_page_template('page-about.php')) {
+        $about_css = 'assets/about.css';
+        wp_enqueue_style('author-theme-about', get_theme_file_uri($about_css), ['author-theme'], (string) filemtime(get_theme_file_path($about_css)));
     }
     if (is_singular('chapter')) {
         $reader_css = 'assets/chapter-reader.css';

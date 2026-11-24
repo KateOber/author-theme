@@ -1,0 +1,85 @@
+main.author-about {
+    --about-ink: #182e37;
+    --about-rule: #b99884;
+    max-width: none;
+    padding: 0;
+    background: #fbf1e5;
+    color: var(--about-ink);
+}
+.author-about-banner {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    place-items: center;
+    min-height: clamp(9rem, 18vw, 17rem);
+    padding: 1.5rem;
+    overflow: hidden;
+    background: linear-gradient(170deg, #a8abc0, #e9c3ba 73%, #f4dcca);
+    text-align: center;
+}
+.author-about-banner img {
+    position: absolute;
+    z-index: -2;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.author-about-banner::before {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: radial-gradient(ellipse, #fff1e3bc, transparent 78%);
+    content: '';
+}
+.author-about h1, .author-about h2 { line-height: 1.12; }
+.author-about-banner h1, .author-about-bio h2, .author-about-story h2 {
+    margin: 0;
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    font-style: italic;
+    font-weight: 500;
+}
+.author-about-banner h1::after, .author-about-bio h2:first-child::after, .author-about-story h2::after {
+    display: block;
+    width: 65%;
+    margin: .65rem auto 0;
+    border-top: .18rem solid #b17a66;
+    border-radius: 50%;
+    content: '';
+}
+.author-about-bio h2:first-child::after, .author-about-story h2::after { margin-inline: 0; }
+.author-about-inner { width: min(100% - 2.5rem, 69rem); margin: auto; padding-block: clamp(2.25rem, 5vw, 4rem); }
+.author-about-inner > * + * { margin-top: clamp(2.7rem, 6vw, 5rem); }
+.author-about-intro, .author-about-story { display: grid; gap: clamp(1.5rem, 5vw, 4rem); align-items: center; }
+.author-about-bio { max-width: 66ch; min-width: 0; }
+.author-about-bio p, .author-about-story p { margin-block: .9em 0; }
+.author-about-portrait { position: relative; isolation: isolate; width: min(88%, 23rem); margin: 0 auto; }
+.author-about-photo, .author-about-postcard {
+    display: block;
+    width: 100%;
+    border: .6rem solid #fff8ed;
+    box-shadow: .25rem .6rem 1.3rem #67443638;
+    transform: rotate(-5deg);
+}
+.author-about-portrait::after {
+    position: absolute;
+    top: -.45rem;
+    left: 38%;
+    width: 30%;
+    height: 1.55rem;
+    background: #d7b68a9c;
+    transform: rotate(-7deg);
+    content: '';
+}
+.author-about-postcard { position: absolute; z-index: -1; inset: 9% auto auto -8%; width: 83%; height: 90%; object-fit: cover; transform: rotate(7deg); }
+.author-about-rule { display: flex; align-items: center; gap: 1rem; justify-content: center; margin: 0 0 1.2rem; font-size: clamp(1.25rem, 3vw, 1.85rem); font-weight: 500; text-align: center; }
+.author-about-rule::before, .author-about-rule::after { flex: 1; border-top: 1px solid var(--about-rule); content: ''; }
+.author-about-interests, .author-about-social ul { display: flex; flex-wrap: wrap; justify-content: center; gap: .9rem 1.6rem; margin: 0; padding: 0; list-style: none; text-align: center; }
+.author-about-interests li { width: min(100%, 10rem); }
+.author-about-interests strong, .author-about-interests span { display: block; }
+.author-about-interests span { font-size: .9rem; }
+.author-about-story img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border: .5rem solid #fff8ed; transform: rotate(-2deg); box-shadow: .2rem .4rem 1rem #67443625; }
+@media (min-width: 48rem) {
+    .author-about-intro.has-portrait { grid-template-columns: minmax(0, 4fr) minmax(0, 5fr); }
+    .author-about-story.has-story-image { grid-template-columns: minmax(0, 4fr) minmax(0, 5fr); }
+}
