@@ -6,7 +6,7 @@ function author_theme_register_publications() {
         'has_archive' => true,
         'show_in_rest' => true,
         'rewrite' => ['slug' => 'books', 'with_front' => false],
-        'supports' => ['title', 'editor', 'custom-fields', 'thumbnail'],
+        'supports' => ['title', 'editor', 'custom-fields', 'thumbnail', 'excerpt'],
     ]);
     register_post_type('chapter', [
         'labels' => ['name' => __('Chapters', 'author-theme'), 'singular_name' => __('Chapter', 'author-theme')],

@@ -3,11 +3,17 @@
     <?php
     $book_id = get_the_ID();
     $locked = post_password_required();
-    $meta = $locked ? [] : array_map('strval', array_map('reset', array_intersect_key(get_post_meta($book_id), array_flip([
-        'series', 'book_number', 'setting', 'genre', 'themes', 'status', 'what_to_expect',
-        'featured_quote', 'pov', 'content_notes', 'update_schedule', 'banner_image_id',
-        'expect_image_id', 'quote_image_id',
-    ]))));
+    $meta = [];
+    if (!$locked) {
+        foreach ([
+            'series', 'book_number', 'setting', 'genre', 'themes', 'status', 'what_to_expect',
+            'featured_quote', 'pov', 'content_notes', 'update_schedule', 'banner_image_id',
+            'expect_image_id', 'quote_image_id',
+        ] as $key) {
+            $value = get_post_meta($book_id, $key, true);
+            $meta[$key] = is_scalar($value) ? trim((string) $value) : '';
+        }
+    }
     $banner = $locked ? 0 : (absint($meta['banner_image_id'] ?? 0) ?: absint(get_theme_mod('author_books_banner')) ?: absint(get_theme_mod('author_home_hero_image')));
     $chapters = $locked ? [] : author_theme_book_chapters($book_id);
     $facts = ['setting' => __('Setting', 'author-theme'), 'genre' => __('Genre', 'author-theme'), 'themes' => __('Themes', 'author-theme'), 'status' => __('Status', 'author-theme')];
