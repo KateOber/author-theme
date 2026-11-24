@@ -13,7 +13,7 @@ function author_theme_register_publications() {
         'public' => true,
         'show_in_rest' => true,
         'rewrite' => false,
-        'supports' => ['title', 'editor', 'custom-fields'],
+        'supports' => ['title', 'editor', 'custom-fields', 'thumbnail', 'comments'],
     ]);
     register_post_type('short_story', [
         'labels' => ['name' => __('Short Stories', 'author-theme'), 'singular_name' => __('Short Story', 'author-theme')],

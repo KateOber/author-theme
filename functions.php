@@ -10,4 +10,11 @@ add_action('after_setup_theme', function () {
 
 add_action('wp_enqueue_scripts', function () {
     wp_enqueue_style('author-theme', get_stylesheet_uri(), [], wp_get_theme()->get('Version'));
+    if (is_singular('chapter')) {
+        $reader_css = 'assets/chapter-reader.css';
+        wp_enqueue_style('author-theme-chapter-reader', get_theme_file_uri($reader_css), ['author-theme'], (string) filemtime(get_theme_file_path($reader_css)));
+        if (comments_open() && get_option('thread_comments')) {
+            wp_enqueue_script('comment-reply');
+        }
+    }
 });

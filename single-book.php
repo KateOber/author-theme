@@ -11,7 +11,7 @@
                 <?php $chapters = author_theme_book_chapters(get_the_ID()); ?>
                 <?php if ($chapters) : ?>
                     <p><a href="<?php echo esc_url(get_permalink($chapters[0])); ?>"><?php esc_html_e('Start Reading', 'author-theme'); ?></a></p>
-                    <h2><?php esc_html_e('Chapters', 'author-theme'); ?></h2>
+                    <h2 id="chapters"><?php esc_html_e('Chapters', 'author-theme'); ?></h2>
                     <ol>
                         <?php foreach ($chapters as $chapter) : ?>
                             <li><a href="<?php echo esc_url(get_permalink($chapter)); ?>"><?php echo esc_html(get_the_title($chapter)); ?></a></li>
