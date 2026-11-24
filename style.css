@@ -1,0 +1,22 @@
+/*
+Theme Name: Author Theme
+Description: A standalone WordPress theme for authors publishing books and serial chapters.
+Version: 1.0.0
+Requires at least: 6.4
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: author-theme
+*/
+:root { color-scheme: light; background: #faf8f3; color: #262721; }
+* { box-sizing: border-box; }
+body { margin: 0; font: 1.125rem/1.65 Georgia, serif; }
+a { color: #365c4c; text-underline-offset: .18em; }
+img { max-width: 100%; height: auto; }
+.site-header, .site-footer, main { max-width: 72rem; margin: auto; padding: 1.25rem clamp(1rem, 4vw, 3rem); }
+.site-header { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .75rem 2rem; border-bottom: 1px solid #dedbd1; }
+.site-name { font-size: 1.4rem; font-weight: bold; }
+.reader { max-width: 68ch; margin-inline: auto; }
+.reader h1 { line-height: 1.15; }
+.chapter-nav { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin-top: 3rem; }
+.book-cover { max-width: 18rem; }

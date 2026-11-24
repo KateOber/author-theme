@@ -1,0 +1,17 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Deploy Author Theme",
+      "type": "process",
+      "command": "bash",
+      "args": ["scripts/deploy.sh", "${input:sshHost}", "${input:themesDirectory}"],
+      "options": {"cwd": "${workspaceFolder}"},
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {"id": "sshHost", "type": "promptString", "description": "SSH destination (user@host or SSH config alias)"},
+    {"id": "themesDirectory", "type": "promptString", "description": "Absolute path to the remote wp-content/themes directory"}
+  ]
+}
