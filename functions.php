@@ -25,7 +25,7 @@ add_action('wp_enqueue_scripts', function () {
         $about_css = 'assets/about.css';
         wp_enqueue_style('author-theme-about', get_theme_file_uri($about_css), ['author-theme'], (string) filemtime(get_theme_file_path($about_css)));
     }
-    if (is_post_type_archive(['book', 'short_story'])) {
+    if (is_post_type_archive(['book', 'short_story']) || is_singular('book')) {
         $books_css = 'assets/books.css';
         wp_enqueue_style('author-theme-books', get_theme_file_uri($books_css), ['author-theme'], (string) filemtime(get_theme_file_path($books_css)));
     }
