@@ -3,6 +3,7 @@ require_once get_theme_file_path('inc/publications.php');
 require_once get_theme_file_path('inc/homepage.php');
 require_once get_theme_file_path('inc/about.php');
 require_once get_theme_file_path('inc/books-archive.php');
+require_once get_theme_file_path('inc/blog.php');
 
 add_action('after_setup_theme', function () {
     load_theme_textdomain('author-theme', get_template_directory() . '/languages');
@@ -26,9 +27,14 @@ add_action('wp_enqueue_scripts', function () {
         wp_enqueue_style('author-theme-about', get_theme_file_uri($about_css), ['author-theme'], (string) filemtime(get_theme_file_path($about_css)));
     }
     $discussion_page = is_page('discussion') || is_page_template('page-discussion.php');
-    if (is_post_type_archive(['book', 'short_story']) || is_singular('book') || $discussion_page) {
+    $blog_page = (is_home() && !is_front_page()) || is_category();
+    if (is_post_type_archive(['book', 'short_story']) || is_singular('book') || $discussion_page || $blog_page) {
         $books_css = 'assets/books.css';
         wp_enqueue_style('author-theme-books', get_theme_file_uri($books_css), ['author-theme'], (string) filemtime(get_theme_file_path($books_css)));
+    }
+    if ($blog_page) {
+        $blog_css = 'assets/blog.css';
+        wp_enqueue_style('author-theme-blog', get_theme_file_uri($blog_css), ['author-theme-books'], (string) filemtime(get_theme_file_path($blog_css)));
     }
     if ($discussion_page) {
         $discussion_css = 'assets/discussion.css';
