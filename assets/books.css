@@ -92,13 +92,14 @@ main.books-archive {
 .book-detail-pitch { font-weight: bold; }
 .book-detail .books-feature-copy .books-actions { margin-top: 1.5rem; }
 .book-detail-panels { display: grid; gap: 1.25rem; }
-.book-detail-panel {
-    min-width: 0;
+.book-detail-panel { min-width: 0; padding: clamp(1rem, 3vw, 1.65rem); background: #fff5e9; box-shadow: 0 .35rem 1rem #65443022; border-radius: .45rem .2rem .6rem .3rem; }
+.book-detail-panels > .book-detail-panel {
+    box-shadow: none;
     padding: clamp(1.6rem, 4vw, 2.6rem);
     background: url("torn-paper-panel.png") center / 100% 100% no-repeat;
 }
 @media (forced-colors: active) {
-    .book-detail-panel { background: Canvas; border: 1px solid CanvasText; }
+    .book-detail-panels > .book-detail-panel { background: Canvas; border: 1px solid CanvasText; }
 }
 .book-detail-panel .books-rule { justify-content: start; text-align: start; }
 .book-detail-panel .books-rule::before { display: none; }
