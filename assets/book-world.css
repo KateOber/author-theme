@@ -1,0 +1,49 @@
+.book-world-section-links, .book-world-quick-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem 1.25rem;
+}
+.book-world-section-links {
+    justify-content: center;
+    padding-block: .8rem;
+    border-block: 1px solid var(--books-rule);
+}
+.book-world-section-links a, .book-world-card a {
+    color: inherit;
+    text-decoration: none;
+}
+.book-world-section-links a { padding: .2rem .45rem; }
+.book-world-section-links a:hover, .book-world-card a:hover { text-decoration: underline; }
+.book-world-quick-links { margin-top: 1rem; font-size: .95rem; }
+.book-world-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.book-world-card {
+    height: 100%;
+    padding: .9rem;
+    background: #fff6eb;
+    border: 1px solid #e9d3bc;
+    border-radius: .35rem;
+    box-shadow: 0 .2rem .55rem #65443017;
+    overflow-wrap: anywhere;
+}
+.book-world-card img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1.45;
+    margin-bottom: .7rem;
+    object-fit: cover;
+    border-radius: .2rem;
+}
+.book-world-card-character img { aspect-ratio: 4 / 5; object-position: center 35%; }
+.book-world-card-artwork img { object-fit: contain; }
+.book-world-card h3, .book-world-extras section > h3 { margin: 0 0 .4rem; font-style: italic; font-weight: 500; }
+.book-world-card p { margin: .4rem 0 0; font-size: .95rem; }
+.book-world-label { font-weight: bold; }
+.book-world-extras > * + * { margin-block-start: 1.25rem; }
+.book-world-extras .book-world-card h3 { font-size: 1.1em; }
