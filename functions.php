@@ -6,6 +6,7 @@ require_once get_theme_file_path('inc/books-archive.php');
 require_once get_theme_file_path('inc/blog.php');
 require_once get_theme_file_path('inc/social-links.php');
 require_once get_theme_file_path('inc/book-world.php');
+require_once get_theme_file_path('inc/gallery.php');
 
 add_action('after_setup_theme', function () {
     load_theme_textdomain('author-theme', get_template_directory() . '/languages');
@@ -30,9 +31,14 @@ add_action('wp_enqueue_scripts', function () {
     }
     $discussion_page = is_page('discussion') || is_page_template('page-discussion.php');
     $blog_page = (is_home() && !is_front_page()) || is_category();
-    if (is_post_type_archive(['book', 'short_story']) || is_singular('book') || $discussion_page || $blog_page) {
+    $gallery_page = is_page() && !is_front_page() && (is_page('gallery') || 'artwork' === author_theme_world_collection_type());
+    if (is_post_type_archive(['book', 'short_story']) || is_singular('book') || $discussion_page || $blog_page || $gallery_page) {
         $books_css = 'assets/books.css';
         wp_enqueue_style('author-theme-books', get_theme_file_uri($books_css), ['author-theme'], (string) filemtime(get_theme_file_path($books_css)));
+    }
+    if ($gallery_page || is_singular('artwork')) {
+        $gallery_css = 'assets/gallery.css';
+        wp_enqueue_style('author-theme-gallery', get_theme_file_uri($gallery_css), ['author-theme'], (string) filemtime(get_theme_file_path($gallery_css)));
     }
     if (is_singular('book') || (is_page() && author_theme_world_collection_type())) {
         $world_css = 'assets/book-world.css';

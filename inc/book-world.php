@@ -63,6 +63,18 @@ add_action('add_meta_boxes', function ($type) {
                 value="<?php echo esc_attr(get_post_meta($post->ID, $key, true)); ?>"></p>
             <?php
         }
+        if ('artwork' === $post->post_type) {
+            $category = get_post_meta($post->ID, '_author_gallery_category', true);
+            ?>
+            <p><label for="author-gallery-category"><?php esc_html_e('Gallery Category', 'author-theme'); ?></label><br>
+            <select id="author-gallery-category" name="author_gallery_category">
+                <option value=""><?php esc_html_e('Uncategorized', 'author-theme'); ?></option>
+                <?php foreach (author_theme_gallery_categories() as $key => $label) : ?>
+                    <option value="<?php echo esc_attr($key); ?>" <?php selected($category, $key); ?>><?php echo esc_html($label); ?></option>
+                <?php endforeach; ?>
+            </select></p>
+            <?php
+        }
         foreach (author_theme_world_relationships($post->post_type) as $type => $label) {
             $selected = array_map('intval', get_post_meta($post->ID, '_author_world_' . $type, false));
             $choices = get_posts([
@@ -109,6 +121,14 @@ add_action('save_post', function ($id, $post) {
         }
         $value = wp_unslash($value);
         update_post_meta($id, $key, wp_slash('url' === $input ? esc_url_raw($value) : sanitize_text_field($value)));
+    }
+    if ('artwork' === $post->post_type && isset($_POST['author_gallery_category']) && is_string($_POST['author_gallery_category'])) {
+        $category = sanitize_key(wp_unslash($_POST['author_gallery_category']));
+        if (isset(author_theme_gallery_categories()[$category])) {
+            update_post_meta($id, '_author_gallery_category', $category);
+        } elseif ('' === $category) {
+            delete_post_meta($id, '_author_gallery_category');
+        }
     }
     foreach (author_theme_world_relationships($post->post_type) as $type => $label) {
         $key = '_author_world_' . $type;
@@ -184,7 +204,7 @@ add_filter('the_content', function ($content) {
         return $content;
     }
     $type = author_theme_world_collection_type();
-    if (!$type) {
+    if ('playlist' !== $type) {
         return $content;
     }
     $entries = author_theme_world_entries($type);
