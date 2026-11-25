@@ -4,6 +4,7 @@ require_once get_theme_file_path('inc/homepage.php');
 require_once get_theme_file_path('inc/about.php');
 require_once get_theme_file_path('inc/books-archive.php');
 require_once get_theme_file_path('inc/blog.php');
+require_once get_theme_file_path('inc/social-links.php');
 
 add_action('after_setup_theme', function () {
     load_theme_textdomain('author-theme', get_template_directory() . '/languages');

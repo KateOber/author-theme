@@ -22,13 +22,7 @@ foreach ([
         $links[$label] = get_permalink($page);
     }
 }
-$socials = [];
-foreach (['Wattpad', 'Instagram', 'Goodreads', 'Amazon'] as $network) {
-    $url = get_theme_mod('author_home_' . strtolower($network), '');
-    if ($url) {
-        $socials[$network] = $url;
-    }
-}
+$socials = author_theme_social_links();
 $updates = get_posts(['posts_per_page' => 3, 'has_password' => false]);
 $blog_page = (int) get_option('page_for_posts');
 ?>
@@ -147,13 +141,9 @@ $blog_page = (int) get_option('page_for_posts');
         <?php if ($socials) : ?>
             <nav class="author-home-social" aria-labelledby="author-home-social-title">
                 <h2 id="author-home-social-title"><?php esc_html_e('Find Me Elsewhere', 'author-theme'); ?></h2>
-                <ul>
-                    <?php foreach ($socials as $label => $url) : ?>
-                        <li><a href="<?php echo esc_url($url); ?>"><?php echo esc_html($label); ?> <span aria-hidden="true">↗</span></a></li>
-                    <?php endforeach; ?>
-                </ul>
+                <?php author_theme_render_social_links($socials); ?>
             </nav>
         <?php endif; ?>
     </div>
 </main>
-<?php get_footer(); ?>
+<?php get_footer(null, ['social_links_shown' => (bool) $socials]); ?>

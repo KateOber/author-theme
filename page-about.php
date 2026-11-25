@@ -11,13 +11,7 @@ while (have_posts()) :
     $story_image = absint(get_theme_mod('author_about_story_image'));
     $story = get_theme_mod('author_about_story', '');
     $interests = array_filter(array_map('trim', preg_split('/\R/u', get_theme_mod('author_about_interests', '')) ?: []));
-    $social = [];
-    foreach (['Instagram', 'Wattpad', 'Goodreads', 'Amazon'] as $network) {
-        $url = get_theme_mod('author_home_' . strtolower($network), '');
-        if ($url) {
-            $social[$network] = $url;
-        }
-    }
+    $social = author_theme_social_links();
     ?>
     <main class="author-about">
         <header class="author-about-banner">
@@ -66,14 +60,10 @@ while (have_posts()) :
             <?php if (!$locked && $social) : ?>
                 <nav class="author-about-social" aria-labelledby="author-connect">
                     <h2 class="author-about-rule" id="author-connect"><?php esc_html_e('Let’s Connect', 'author-theme'); ?></h2>
-                    <ul>
-                        <?php foreach ($social as $label => $url) : ?>
-                            <li><a href="<?php echo esc_url($url); ?>"><?php echo esc_html($label); ?> ↗</a></li>
-                        <?php endforeach; ?>
-                    </ul>
+                    <?php author_theme_render_social_links($social); ?>
                 </nav>
             <?php endif; ?>
         </div>
     </main>
 <?php endwhile; ?>
-<?php get_footer(); ?>
+<?php get_footer(null, ['social_links_shown' => !empty($social) && !$locked]); ?>

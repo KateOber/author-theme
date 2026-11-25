@@ -155,3 +155,31 @@ img { max-width: 100%; height: auto; }
     .site-menu li:hover > .sub-menu, .site-menu li:focus-within > .sub-menu { display: block; }
     .site-menu .sub-menu .sub-menu { inset-inline-start: 100%; top: 0; }
 }
+
+.site-footer { text-align: center; }
+.author-social-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .55rem 1.25rem;
+    margin: .55rem 0 1rem;
+    padding: 0;
+    list-style: none;
+}
+.author-social-links a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .3rem;
+    min-width: 4.25rem;
+    padding: .3rem;
+    color: inherit;
+    font-size: .95rem;
+    text-decoration: none;
+}
+.author-social-links a:hover span { text-decoration: underline; }
+.author-social-links a:focus-visible { outline: 2px solid #245464; outline-offset: 3px; }
+.author-social-icon { display: block; width: 2rem; height: 2rem; color: #253b48; }
+.author-social-wattpad .author-social-icon { color: #c84c14; }
+.author-social-instagram .author-social-icon { color: #923b71; }
+.author-social-goodreads .author-social-icon { color: #69462d; }
