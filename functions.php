@@ -25,9 +25,14 @@ add_action('wp_enqueue_scripts', function () {
         $about_css = 'assets/about.css';
         wp_enqueue_style('author-theme-about', get_theme_file_uri($about_css), ['author-theme'], (string) filemtime(get_theme_file_path($about_css)));
     }
-    if (is_post_type_archive(['book', 'short_story']) || is_singular('book')) {
+    $discussion_page = is_page('discussion') || is_page_template('page-discussion.php');
+    if (is_post_type_archive(['book', 'short_story']) || is_singular('book') || $discussion_page) {
         $books_css = 'assets/books.css';
         wp_enqueue_style('author-theme-books', get_theme_file_uri($books_css), ['author-theme'], (string) filemtime(get_theme_file_path($books_css)));
+    }
+    if ($discussion_page) {
+        $discussion_css = 'assets/discussion.css';
+        wp_enqueue_style('author-theme-discussion', get_theme_file_uri($discussion_css), ['author-theme-books'], (string) filemtime(get_theme_file_path($discussion_css)));
     }
     if (is_singular('chapter')) {
         $reader_css = 'assets/chapter-reader.css';

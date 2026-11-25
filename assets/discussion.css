@@ -1,0 +1,37 @@
+.discussion-hero { min-height: clamp(13rem, 24vw, 21rem); padding: 1.75rem 1.25rem; text-align: center; }
+.discussion-hero h1 { display: inline-block; }
+.discussion-hero p { margin: 1rem auto 0; max-width: 44ch; }
+.discussion-inner { padding-top: 1.7rem; }
+.discussion-actions { justify-content: center; margin-bottom: 2rem; }
+.discussion-page-content { max-width: 66ch; margin: 0 auto 2rem; }
+.discussion-layout { display: grid; gap: 1.5rem; }
+.discussion-layout > * { min-width: 0; }
+.discussion-layout .books-rule { text-align: start; }
+.discussion-layout .books-rule::before { display: none; }
+.discussion-boards, .discussion-topic-list { padding: 0; list-style: none; }
+.discussion-boards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(8rem, 100%), 1fr)); gap: .65rem; }
+.discussion-boards li, .discussion-note { border: 1px solid #e7cdb6; border-radius: .4rem; background: #f8e8d8; box-shadow: 0 .2rem .55rem #65443017; }
+.discussion-boards a { display: block; height: 100%; padding: .8rem; color: inherit; text-align: center; text-decoration: none; }
+.discussion-boards a:hover strong, .discussion-topic-list a:hover { text-decoration: underline; }
+.discussion-boards img { width: 100%; aspect-ratio: 1.5; object-fit: cover; border-radius: .25rem; }
+.discussion-boards strong, .discussion-boards span { display: block; }
+.discussion-boards strong { font-style: italic; line-height: 1.15; }
+.discussion-boards span { margin-top: .4rem; font-size: .88rem; line-height: 1.35; }
+.discussion-topics { margin-top: 2rem; }
+.discussion-filters { justify-content: flex-start; margin-bottom: .75rem; }
+.discussion-topic-list > li { display: flex; flex-wrap: wrap; gap: .45rem 1.25rem; justify-content: space-between; padding: .75rem 0; border-bottom: 1px solid var(--books-rule); }
+.discussion-topic-list a { color: inherit; font-weight: bold; text-decoration: none; }
+.discussion-topic-board { display: block; font-size: .82rem; }
+.discussion-topic-meta { display: flex; flex-wrap: wrap; gap: .3rem .7rem; align-items: baseline; font-size: .85rem; }
+.discussion-sidebar { display: grid; align-content: start; gap: .9rem; }
+.discussion-note { padding: 1rem 1.2rem; font-size: .96rem; }
+.discussion-note h2 { margin: 0; font-size: 1.2rem; }
+.discussion-note ul { margin-bottom: 0; padding-inline-start: 1.15rem; }
+.discussion-member { display: flex; align-items: center; gap: .8rem; }
+.discussion-member img { border-radius: 50%; }
+.discussion-compose { margin-top: 2rem; }
+.discussion-compose textarea { max-width: 100%; }
+@media (min-width: 55rem) {
+    .discussion-layout { grid-template-columns: minmax(0, 2.2fr) minmax(15rem, 1fr); }
+    .discussion-sidebar { padding-inline-start: 1.25rem; border-inline-start: 1px solid var(--books-rule); }
+}
