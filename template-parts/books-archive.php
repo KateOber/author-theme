@@ -10,14 +10,22 @@ $featured = !$short_stories && !$filter && !is_paged() ? author_theme_home_featu
 if ($featured && !in_array($featured->ID, wp_list_pluck($books, 'ID'), true)) {
     $featured = null;
 }
-$groups = ['progress' => [], 'other' => []];
+$groups = ['novels' => [], 'progress' => [], 'upcoming' => [], 'other' => []];
 $statuses = author_theme_book_statuses();
 foreach ($books as $book) {
     if ($featured && $book->ID === $featured->ID) {
         continue;
     }
     $status = strtolower(trim((string) get_post_meta($book->ID, 'status', true)));
-    $group = !$short_stories && in_array($status, $statuses['in-progress'], true) ? 'progress' : 'other';
+    $group = 'other';
+    if (!$short_stories) {
+        $group = 'novels';
+        if (in_array($status, $statuses['in-progress'], true)) {
+            $group = 'progress';
+        } elseif (in_array($status, $statuses['upcoming'], true)) {
+            $group = 'upcoming';
+        }
+    }
     $groups[$group][] = $book;
 }
 ?>
@@ -80,8 +88,10 @@ foreach ($books as $book) {
 
         <?php
         $sections = [
+            'novels' => $filter ? author_theme_book_filters()[$filter] : ($featured ? __('More Novels', 'author-theme') : __('Novels', 'author-theme')),
             'progress' => __('Work in Progress', 'author-theme'),
-            'other' => $short_stories ? '' : ($filter ? author_theme_book_filters()[$filter] : __('Other Projects', 'author-theme')),
+            'upcoming' => __('Upcoming', 'author-theme'),
+            'other' => '',
         ];
         foreach ($sections as $group => $heading) :
             if (!$groups[$group]) {
@@ -97,7 +107,7 @@ foreach ($books as $book) {
                         $status = $protected ? '' : get_post_meta($book->ID, 'status', true);
                         $progress = $protected ? '' : get_post_meta($book->ID, 'progress', true);
                         ?>
-                        <article class="books-project">
+                        <article class="books-project<?php echo $short_stories ? '' : ' books-project-novel'; ?>">
                             <?php if (!$protected) : ?>
                                 <?php echo get_the_post_thumbnail($book, 'medium_large', ['class' => 'books-project-image']); ?>
                             <?php endif; ?>

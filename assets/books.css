@@ -122,3 +122,18 @@ main.books-archive {
     .book-detail-panels:has(> :nth-child(2)) { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); }
     .book-detail-expect-art { float: inline-start; width: 44%; margin: 0 1rem .5rem 0; }
 }
+
+.books-projects .books-project-novel:has(.books-project-image) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    align-items: start;
+    gap: clamp(.85rem, 3vw, 2rem);
+}
+.books-projects .books-project-novel .books-project-image {
+    width: 100%;
+    max-width: 12rem;
+    height: auto;
+    aspect-ratio: auto;
+    border-radius: .2rem;
+}
+.books-project-novel .books-progress { grid-column: 2; }
