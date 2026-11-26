@@ -7,6 +7,7 @@ require_once get_theme_file_path('inc/blog.php');
 require_once get_theme_file_path('inc/social-links.php');
 require_once get_theme_file_path('inc/book-world.php');
 require_once get_theme_file_path('inc/gallery.php');
+require_once get_theme_file_path('inc/chapter-discussion.php');
 
 add_action('after_setup_theme', function () {
     load_theme_textdomain('author-theme', get_template_directory() . '/languages');
@@ -55,6 +56,8 @@ add_action('wp_enqueue_scripts', function () {
     if (is_singular('chapter')) {
         $reader_css = 'assets/chapter-reader.css';
         wp_enqueue_style('author-theme-chapter-reader', get_theme_file_uri($reader_css), ['author-theme'], (string) filemtime(get_theme_file_path($reader_css)));
+        $discussion_script = 'assets/chapter-discussion.js';
+        wp_enqueue_script('author-theme-chapter-discussion', get_theme_file_uri($discussion_script), [], (string) filemtime(get_theme_file_path($discussion_script)), true);
         if (comments_open() && get_option('thread_comments')) {
             wp_enqueue_script('comment-reply');
         }

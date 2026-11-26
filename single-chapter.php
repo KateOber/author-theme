@@ -5,6 +5,7 @@
         $chapter_id = get_the_ID();
         $book = author_theme_chapter_book($chapter_id);
         $protected = post_password_required();
+        $show_comments = !$protected && (comments_open() || get_comments_number());
         $chapters = $book && !$protected ? author_theme_book_chapters($book->ID) : [];
         $position = array_search($chapter_id, wp_list_pluck($chapters, 'ID'), true);
         $previous = false === $position ? null : ($chapters[$position - 1] ?? null);
@@ -68,7 +69,15 @@
                         <p class="chapter-subtitle"><?php echo esc_html($title); ?></p>
                     <?php endif; ?>
                 </header>
-                <div class="chapter-prose"><?php the_content(); ?></div>
+                <div class="chapter-prose">
+                    <?php
+                    if ($show_comments) {
+                        add_filter('the_content', 'author_theme_chapter_paragraphs', PHP_INT_MAX);
+                    }
+                    the_content();
+                    remove_filter('the_content', 'author_theme_chapter_paragraphs', PHP_INT_MAX);
+                    ?>
+                </div>
                 <?php if ($chapters) : ?>
                     <nav class="chapter-pagination" aria-label="<?php esc_attr_e('Chapter navigation', 'author-theme'); ?>">
                         <?php if ($previous) : ?>
@@ -86,8 +95,22 @@
                         <?php endif; ?>
                     </nav>
                 <?php endif; ?>
-                <?php if (!$protected && (comments_open() || get_comments_number())) : ?>
-                    <?php comments_template('/chapter-comments.php'); ?>
+                <?php if ($show_comments) : ?>
+                    <?php
+                    $paragraph = author_theme_chapter_thread($_GET['paragraph'] ?? '');
+                    $thread_query = static function ($args) use ($paragraph) {
+                        if ($paragraph) {
+                            $args['meta_key'] = 'author_chapter_paragraph';
+                            $args['meta_value'] = $paragraph;
+                            $args['number'] = 0;
+                            $args['offset'] = 0;
+                        }
+                        return $args;
+                    };
+                    add_filter('comments_template_query_args', $thread_query);
+                    comments_template('/chapter-comments.php');
+                    remove_filter('comments_template_query_args', $thread_query);
+                    ?>
                 <?php endif; ?>
             </article>
         </div>

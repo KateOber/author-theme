@@ -173,3 +173,25 @@ body.single-chapter {
     .chapter-index a:hover { text-decoration: underline; }
     .chapter-index [aria-current="page"] { border-radius: 1rem; background: var(--reader-peach); font-weight: bold; }
 }
+
+.chapter-paragraph-discussion {
+    display: inline-grid;
+    place-items: center;
+    min-width: 1.75rem;
+    min-height: 1.75rem;
+    vertical-align: middle;
+    color: var(--reader-ink, currentColor);
+    text-decoration: none;
+}
+.chapter-paragraph-discussion::before {
+    grid-area: 1 / 1;
+    width: .95rem;
+    height: .7rem;
+    border: 1px solid currentColor;
+    border-radius: .35rem .35rem .35rem 0;
+    content: '';
+}
+.chapter-paragraph-discussion:hover,
+.chapter-paragraph-discussion:focus-visible,
+.chapter-paragraph-discussion[aria-current] { background: #f5dfce; border-radius: .35rem; }
+.chapter-prose .chapter-comments { margin-block: 1rem 2rem; font-size: 1rem; }
