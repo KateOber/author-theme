@@ -200,7 +200,6 @@ body.single-chapter {
 .chapter-paragraph-discussion:focus-visible,
 .chapter-paragraph-discussion[aria-current],
 .chapter-paragraph-discussion.has-comments,
-.is-comment-target > .chapter-paragraph-discussion,
 .show-comment-controls .chapter-paragraph-discussion { opacity: 1; }
 .chapter-paragraph-discussion:hover,
 .chapter-paragraph-discussion:focus-visible,
@@ -210,3 +209,21 @@ body.single-chapter {
 .chapter-discussion-toggle { margin-block-end: 1rem; }
 .chapter-comment-identity { display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: baseline; margin-block: .75rem; }
 .chapter-comment-identity p { flex-basis: 100%; margin: 0; }
+
+@media (hover: none) {
+    .chapter-prose .chapter-paragraph-discussion:empty {
+        opacity: 0;
+        pointer-events: none;
+    }
+    .chapter-prose.show-comment-controls .chapter-paragraph-discussion:empty,
+    .chapter-prose .chapter-paragraph-discussion:empty:focus-visible {
+        opacity: 1;
+        pointer-events: auto;
+    }
+    .chapter-prose .chapter-paragraph-discussion:empty::before {
+        width: auto;
+        height: auto;
+        border: 0;
+        content: '+';
+    }
+}

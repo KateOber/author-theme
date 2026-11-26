@@ -10,14 +10,18 @@ if (discussion && prose) {
         toggle.setAttribute('aria-pressed', String(show));
     });
 
-    prose.addEventListener('pointerup', (event) => {
-        if (event.pointerType !== 'touch' || event.target.closest('a, button') || !window.getSelection()?.isCollapsed) return;
+    prose.addEventListener('click', (event) => {
+        const touchTap = event.pointerType === 'touch' || (event.detail > 0 && matchMedia('(hover: none)').matches);
+        if (!touchTap || event.target.closest('a, button, input, textarea, label') || !window.getSelection()?.isCollapsed) return;
 
-        const paragraph = event.target.closest('[data-chapter-paragraph]');
-        if (!paragraph?.querySelector('.chapter-paragraph-discussion')) return;
+        const link = event.target.closest('[data-chapter-paragraph]')?.querySelector('.chapter-paragraph-discussion');
+        if (!link) return;
 
-        prose.querySelector('.is-comment-target')?.classList.remove('is-comment-target');
-        paragraph.classList.add('is-comment-target');
+        if (link.getAttribute('aria-current') === 'true') {
+            discussion.scrollIntoView();
+        } else {
+            location.assign(link.href);
+        }
     });
 
     prose.querySelectorAll('[data-chapter-paragraph]').forEach((paragraph) => {
