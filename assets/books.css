@@ -123,17 +123,26 @@ main.books-archive {
     .book-detail-expect-art { float: inline-start; width: 44%; margin: 0 1rem .5rem 0; }
 }
 
-.books-projects .books-project-novel:has(.books-project-image) {
+.books-projects-novels .books-project-grid,
+.books-projects-upcoming .books-project-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 16rem));
+    justify-content: center;
+}
+.books-projects .books-project-novel {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-    align-items: start;
-    gap: clamp(.85rem, 3vw, 2rem);
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    align-content: start;
+    gap: .75rem;
+    text-align: center;
 }
 .books-projects .books-project-novel .books-project-image {
     width: 100%;
     max-width: 12rem;
     height: auto;
     aspect-ratio: auto;
-    border-radius: .2rem;
+    border-radius: .15rem .35rem .35rem .15rem;
+    box-shadow: inset 2px 0 #30221c33, 0 .45rem .9rem #65443033;
 }
-.books-project-novel .books-progress { grid-column: 2; }
+.books-project-novel h3 { margin-top: 0; text-wrap: balance; }
+.books-project-novel .books-progress { width: min(100%, 16rem); }
