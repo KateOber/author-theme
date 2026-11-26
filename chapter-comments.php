@@ -1,5 +1,5 @@
 <?php if (post_password_required()) { return; } ?>
-<?php $paragraph = author_theme_chapter_thread($_GET['paragraph'] ?? ''); ?>
+<?php $paragraph = is_singular('chapter') ? author_theme_chapter_thread($_GET['paragraph'] ?? '') : 0; ?>
 <section id="chapter-discussion" class="chapter-comments" aria-labelledby="chapter-comments-heading"
     data-paragraph="<?php echo esc_attr($paragraph); ?>"
     data-link-label="<?php esc_attr_e('Discuss paragraph %s', 'author-theme'); ?>"

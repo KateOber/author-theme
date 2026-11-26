@@ -16,6 +16,9 @@
                 <?php the_excerpt(); ?>
             <?php endif; ?>
         </article>
+        <?php if (is_singular('post') && !post_password_required() && (comments_open() || get_comments_number())) : ?>
+            <?php comments_template('/chapter-comments.php'); ?>
+        <?php endif; ?>
     <?php endwhile; ?>
     <?php the_posts_pagination(); ?>
 </main>

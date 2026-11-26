@@ -53,13 +53,15 @@ add_action('wp_enqueue_scripts', function () {
         $discussion_css = 'assets/discussion.css';
         wp_enqueue_style('author-theme-discussion', get_theme_file_uri($discussion_css), ['author-theme-books'], (string) filemtime(get_theme_file_path($discussion_css)));
     }
-    if (is_singular('chapter')) {
+    if (is_singular('chapter') || is_singular('post')) {
         $reader_css = 'assets/chapter-reader.css';
         wp_enqueue_style('author-theme-chapter-reader', get_theme_file_uri($reader_css), ['author-theme'], (string) filemtime(get_theme_file_path($reader_css)));
+    }
+    if (is_singular('chapter')) {
         $discussion_script = 'assets/chapter-discussion.js';
         wp_enqueue_script('author-theme-chapter-discussion', get_theme_file_uri($discussion_script), [], (string) filemtime(get_theme_file_path($discussion_script)), true);
-        if (comments_open() && get_option('thread_comments')) {
-            wp_enqueue_script('comment-reply');
-        }
+    }
+    if (is_singular(['chapter', 'post']) && comments_open() && get_option('thread_comments')) {
+        wp_enqueue_script('comment-reply');
     }
 });
