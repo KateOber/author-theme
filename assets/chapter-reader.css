@@ -174,24 +174,38 @@ body.single-chapter {
     .chapter-index [aria-current="page"] { border-radius: 1rem; background: var(--reader-peach); font-weight: bold; }
 }
 
+.chapter-prose:has(.chapter-paragraph-discussion) { padding-inline-end: 2.65rem; }
+.chapter-prose [data-chapter-paragraph] { position: relative; }
 .chapter-paragraph-discussion {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: calc(100% + .25rem);
     display: inline-grid;
     place-items: center;
-    min-width: 1.75rem;
-    min-height: 1.75rem;
-    vertical-align: middle;
-    color: var(--reader-ink, currentColor);
+    min-width: 2.4rem;
+    min-height: 2rem;
+    color: inherit;
+    font: 600 .8rem/1 system-ui, sans-serif;
     text-decoration: none;
+    opacity: 0;
 }
-.chapter-paragraph-discussion::before {
-    grid-area: 1 / 1;
+.chapter-paragraph-discussion:empty::before {
     width: .95rem;
     height: .7rem;
     border: 1px solid currentColor;
     border-radius: .35rem .35rem .35rem 0;
     content: '';
 }
+[data-chapter-paragraph]:hover > .chapter-paragraph-discussion,
+.chapter-paragraph-discussion:focus-visible,
+.chapter-paragraph-discussion[aria-current],
+.chapter-paragraph-discussion.has-comments,
+.show-comment-controls .chapter-paragraph-discussion { opacity: 1; }
 .chapter-paragraph-discussion:hover,
 .chapter-paragraph-discussion:focus-visible,
-.chapter-paragraph-discussion[aria-current] { background: #f5dfce; border-radius: .35rem; }
+.chapter-paragraph-discussion[aria-current],
+.chapter-paragraph-discussion.has-comments { background: #f5dfce; border-radius: .4rem; }
 .chapter-prose .chapter-comments { margin-block: 1rem 2rem; font-size: 1rem; }
+.chapter-discussion-toggle { margin-block-end: 1rem; }
+.chapter-comment-identity { display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: baseline; margin-block: .75rem; }
+.chapter-comment-identity p { flex-basis: 100%; margin: 0; }

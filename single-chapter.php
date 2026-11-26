@@ -69,6 +69,9 @@
                         <p class="chapter-subtitle"><?php echo esc_html($title); ?></p>
                     <?php endif; ?>
                 </header>
+                <?php if ($show_comments) : ?>
+                    <button class="chapter-discussion-toggle" type="button" aria-pressed="false" hidden><?php esc_html_e('Show paragraph comment controls', 'author-theme'); ?></button>
+                <?php endif; ?>
                 <div class="chapter-prose">
                     <?php
                     if ($show_comments) {

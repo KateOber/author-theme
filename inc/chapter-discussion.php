@@ -5,10 +5,25 @@ function author_theme_chapter_paragraphs($content) {
         return $content;
     }
 
+    $comments = get_comments([
+        'post_id' => get_the_ID(),
+        'status' => 'approve',
+        'type' => 'comment',
+        'meta_key' => 'author_chapter_paragraph',
+    ]);
+    $counts = [];
+    foreach ($comments as $comment) {
+        $paragraph = (int) get_comment_meta($comment->comment_ID, 'author_chapter_paragraph', true);
+        $counts[$paragraph] = ($counts[$paragraph] ?? 0) + 1;
+    }
+
     $html = new WP_HTML_Tag_Processor($content);
     $index = 0;
     while ($html->next_tag('P')) {
         $html->set_attribute('data-chapter-paragraph', (string) ++$index);
+        if (isset($counts[$index])) {
+            $html->set_attribute('data-chapter-comment-count', (string) $counts[$index]);
+        }
     }
     return $html->get_updated_html();
 }
