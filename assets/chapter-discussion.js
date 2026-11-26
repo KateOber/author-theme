@@ -10,6 +10,16 @@ if (discussion && prose) {
         toggle.setAttribute('aria-pressed', String(show));
     });
 
+    prose.addEventListener('pointerup', (event) => {
+        if (event.pointerType !== 'touch' || event.target.closest('a, button') || !window.getSelection()?.isCollapsed) return;
+
+        const paragraph = event.target.closest('[data-chapter-paragraph]');
+        if (!paragraph?.querySelector('.chapter-paragraph-discussion')) return;
+
+        prose.querySelector('.is-comment-target')?.classList.remove('is-comment-target');
+        paragraph.classList.add('is-comment-target');
+    });
+
     prose.querySelectorAll('[data-chapter-paragraph]').forEach((paragraph) => {
         if (!paragraph.textContent.trim()) return;
 

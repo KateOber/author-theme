@@ -200,6 +200,7 @@ body.single-chapter {
 .chapter-paragraph-discussion:focus-visible,
 .chapter-paragraph-discussion[aria-current],
 .chapter-paragraph-discussion.has-comments,
+.is-comment-target > .chapter-paragraph-discussion,
 .show-comment-controls .chapter-paragraph-discussion { opacity: 1; }
 .chapter-paragraph-discussion:hover,
 .chapter-paragraph-discussion:focus-visible,
